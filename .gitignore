@@ -1,0 +1,9 @@
+wcm_data/
+build/
+*.py~
+*.pyc
+*.pdf
+*.png
+*.mp4
+*.root
+*.gif
