@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import sys
-from ctypes import CDLL, c_char_p, c_double
+from ctypes import CDLL, c_char_p, c_double, c_void_p
 import os
 
 import ROOT as rt
@@ -23,7 +23,8 @@ def main():
     lib = CDLL("build/librhic_beam_shape.so")
 
     #simulation instance
-    sim = lib.make_sim( c_char_p(bytes(config, "utf-8")) )
+    lib.make_sim.restype = c_void_p
+    sim = c_void_p( lib.make_sim( c_char_p(bytes(config, "utf-8")) ) )
 
     print(con.str("mode"))
 
@@ -34,7 +35,7 @@ def main():
     func["draw_xz"] = draw_xz
     func["draw_input"] = draw_input
 
-
+    #call the function selected in the configuration
     func[con.str("mode")](lib, sim, con)
 
 #main
